@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'gender_emun.dart';
 import 'constants.dart';
 import 'icon_content.dart';
 import 'reusable_container.dart';
@@ -13,6 +14,8 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Gender selectedGender;
   int height = 180;
+  int weight = 60;
+  int age = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +67,7 @@ class _InputPageState extends State<InputPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Heirght'.toUpperCase(),
+                    'Height'.toUpperCase(),
                     style: kLabelTextStyle,
                   ),
                   Row(
@@ -110,18 +113,86 @@ class _InputPageState extends State<InputPage> {
               child: Row(children: <Widget>[
             Expanded(
               child: ReusableCard(
+                cardChild: Column(
+                  children: <Widget>[
+                    Text(
+                      'Weight'.toUpperCase(),
+                      style: kLabelTextStyle,
+                    ),
+                    Text(
+                      weight.toString(),
+                      style: kNumberTextStyle,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        RoundIconButton(
+                          icon: FontAwesomeIcons.minus,
+                          onPressed: () {
+                            setState(() {
+                              weight--;
+                            });
+                          },
+                        ),
+                        SizedBox(width: 10.0),
+                        RoundIconButton(
+                          icon: FontAwesomeIcons.plus,
+                          onPressed: () {
+                            setState(() {
+                              weight++;
+                            });
+                          },
+                        ),
+                      ],
+                    )
+                  ],
+                ),
                 color: kActiveContainerColor,
               ),
             ),
             Expanded(
               child: ReusableCard(
+                cardChild: Column(
+                  children: <Widget>[
+                    Text(
+                      'Age'.toUpperCase(),
+                      style: kLabelTextStyle,
+                    ),
+                    Text(
+                      age.toString(),
+                      style: kNumberTextStyle,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        RoundIconButton(
+                          icon: FontAwesomeIcons.minus,
+                          onPressed: () {
+                            setState(() {
+                              age--;
+                            });
+                          },
+                        ),
+                        SizedBox(width: 10.0),
+                        RoundIconButton(
+                          icon: FontAwesomeIcons.plus,
+                          onPressed: () {
+                            setState(() {
+                              age++;
+                            });
+                          },
+                        ),
+                      ],
+                    )
+                  ],
+                ),
                 color: kActiveContainerColor,
               ),
             ),
           ])),
           Container(
             color: kBottomContainerColor,
-            margin: EdgeInsets.only(top: 10.0),
+            margin: EdgeInsets.only(top: 5.0),
             width: double.infinity,
             height: kBottomContainerHeight,
           )
@@ -131,4 +202,20 @@ class _InputPageState extends State<InputPage> {
   }
 }
 
-enum Gender { male, female }
+class RoundIconButton extends StatelessWidget {
+  final IconData icon;
+  final Function onPressed;
+
+  RoundIconButton({@required this.icon, @required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(icon),
+      onPressed: onPressed,
+      shape: CircleBorder(),
+      constraints: BoxConstraints.tightFor(width: 56.0, height: 56.0),
+      fillColor: Color(0xFF4C4E5F),
+    );
+  }
+}
