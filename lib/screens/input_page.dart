@@ -1,10 +1,14 @@
+import 'package:bmi_calculator/ClaculatorBrain.dart';
+import 'package:bmi_calculator/components/bottom_button.dart';
+import 'package:bmi_calculator/components/round_icon_button.dart';
+import 'package:bmi_calculator/screens/result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'gender_emun.dart';
-import 'constants.dart';
-import 'icon_content.dart';
-import 'reusable_container.dart';
+import '../gender_emun.dart';
+import '../constants.dart';
+import '../components/icon_content.dart';
+import '../components/reusable_container.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -190,32 +194,24 @@ class _InputPageState extends State<InputPage> {
               ),
             ),
           ])),
-          Container(
-            color: kBottomContainerColor,
-            margin: EdgeInsets.only(top: 5.0),
-            width: double.infinity,
-            height: kBottomContainerHeight,
+          BottomButton(
+            onTap: () {
+              CalculatorBrain calc =
+                  CalculatorBrain(height: height, weight: weight);
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResultPage(
+                            bmiResult: calc.calculateBMI(),
+                            resultText: calc.getResult(),
+                            interpretation: calc.getInterpretation(),
+                          )));
+            },
+            buttonTitle: 'calculate',
           )
         ],
       ),
-    );
-  }
-}
-
-class RoundIconButton extends StatelessWidget {
-  final IconData icon;
-  final Function onPressed;
-
-  RoundIconButton({@required this.icon, @required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      child: Icon(icon),
-      onPressed: onPressed,
-      shape: CircleBorder(),
-      constraints: BoxConstraints.tightFor(width: 56.0, height: 56.0),
-      fillColor: Color(0xFF4C4E5F),
     );
   }
 }
